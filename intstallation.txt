@@ -1,0 +1,4 @@
+Installation Mujoco-Env
+- cd mujoco_state
+- pip install -e .
+- pip install -r requirements.txt

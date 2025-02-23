@@ -1,0 +1,45 @@
+version: '3.9'
+
+services:
+  demonstration-learning:
+    container_name: ${USER_NAME}_${PROJECT_NAME}_2
+    image: ${USER_NAME}/${PROJECT_NAME}:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args: # Variables for only build context (build-time arguments)
+        USER_ID: ${USER_ID}
+        USER_NAME: ${USER_NAME}
+        GROUP_NAME: ${GROUP_NAME}
+        PROJECT_NAME: ${PROJECT_NAME}
+        HOST_IP: ${HOST_IP}
+    
+    ports:
+      # VNC ports
+      - ${VNC_PORT}:6082
+
+    volumes:
+    # Mount code directory
+      - type: bind
+        source: ../
+        target: /${PROJECT_NAME}
+
+    environment: # Variables for only runtime context (runtime arguments)
+      - DISPLAY=:0
+      - VNC_PW=${VNC_PW} # Set your password for web access and sudo, must be complex otherwise it will not work 
+      - VNC_PORT=${VNC_PORT}
+      - USER_NAME=${USER_NAME}
+      - PROJECT_NAME=${PROJECT_NAME}
+      - HOST_IP=${HOST_IP}
+
+
+    #Comment out the whole deploy part if you use CPU only, leave it if GPU should be used
+    stdin_open: true # docker run -i
+    tty: true        # docker run -t
+    privileged: true
+    shm_size: ${DOCKER_SHARED_MEMORY}
+    deploy:
+      resources:
+        limits:
+          cpus: ${DOCKER_NUM_CPUS} # Number of CPU cores/threads 9.0 for 10GB, 13.0 for 20GB and 32.0 for 40GB GPU
+          memory: ${DOCKER_MEMORY} # Amount of RAM in gigabyte, only increase if necessary 

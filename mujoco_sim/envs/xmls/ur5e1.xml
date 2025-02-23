@@ -1,0 +1,303 @@
+<mujoco model="ur5e_with_hande">
+  <compiler angle="radian" autolimits="true"/>
+
+  <option integrator="implicitfast"/>
+
+  <default>
+    <default class="ur5e">
+      <material specular="0.5" shininess="0.25"/>
+      <joint axis="0 1 0" range="-6.28319 6.28319" armature="0.1"/>
+      <general gaintype="fixed" biastype="affine" ctrlrange="-6.2831 6.2831" gainprm="2000" biasprm="0 -2000 -400"
+        forcerange="-150 150"/>
+      <default class="size3">
+        <default class="size3_limited">
+          <joint range="-3.1415 3.1415"/>
+          <general ctrlrange="-3.1415 3.1415"/>
+        </default>
+      </default>
+      <default class="size1">
+        <general gainprm="500" biasprm="0 -500 -100" forcerange="-28 28"/>
+      </default>
+      <default class="visual">
+        <geom type="mesh" contype="0" conaffinity="0" group="2" />
+      </default>
+      <default class="connector">
+        <geom type="box" density="200" friction="0.95 0.3 0.1" 
+              contype="1" conaffinity="1" condim="4"
+              material="connector_mat"/>
+      </default>
+      <default class="hande_collision">
+        <geom type="mesh" contype="0" conaffinity="3" group="3" solimp="0.95 0.95 0.01" solref="0.01 1" priority="1" condim="3" friction="0.8 0.8 0.8" margin="0.0001"/>
+        <default class="pad_box2">
+          <geom mass="0"  contype="1" conaffinity="1" type="box" pos="2.79852883e-02 -3.19443699e-05  3.65e-02" size="0.003 0.0105     0.01 " friction="0.8 0.8 0.8"
+            solimp="0.95 0.95 0.01" solref="0.004 1" priority="1" rgba="0.55 0.55 0.55 1"/>
+        </default>
+        <default class="pad_box1">
+          <geom mass="0"  contype="1" conaffinity="1" type="box" pos="-2.79852883e-02 3.19443699e-05  3.65e-02" size="0.003 0.0105     0.01 " friction="0.8 0.8 0.8"
+            solimp="0.95 0.95 0.01" solref="0.004 1" priority="1" rgba="0.45 0.45 0.45 1"/>
+        </default>
+      </default>
+      <default class="collision">
+        <geom type="capsule" group="3"/> 
+        <default class="eef_collision">
+          <geom type="cylinder"/>
+        </default>
+      </default>
+      <site size="0.001" rgba="0.5 0.5 0.5 0.3" group="4"/>
+    </default>
+  </default>
+
+  <!-- Hand-E Gripper Definition -->
+  <default>
+    <default class="hande">
+      <default class="hande_right_finger">
+        <joint type="slide" range="0.0 0.025"/>
+      </default>
+      <default class="hande_left_finger">
+        <joint type="slide" range="0.0 0.025"/>
+      </default>
+    </default>
+  </default>
+
+  <asset>
+    <material class="ur5e" name="black" rgba="0.033 0.033 0.033 1"/>
+    <material class="ur5e" name="jointgray" rgba="0.278 0.278 0.278 1"/>
+    <material class="ur5e" name="linkgray" rgba="0.82 0.82 0.82 1"/>
+    <material class="ur5e" name="urblue" rgba="0.49 0.678 0.8 1"/>
+
+    <mesh file="ur5e/assets/base_0.obj"/>
+    <mesh file="ur5e/assets/base_1.obj"/>
+    <mesh file="ur5e/assets/shoulder_0.obj"/>
+    <mesh file="ur5e/assets/shoulder_1.obj"/>
+    <mesh file="ur5e/assets/shoulder_2.obj"/>
+    <mesh file="ur5e/assets/upperarm_0.obj"/>
+    <mesh file="ur5e/assets/upperarm_1.obj"/>
+    <mesh file="ur5e/assets/upperarm_2.obj"/>
+    <mesh file="ur5e/assets/upperarm_3.obj"/>
+    <mesh file="ur5e/assets/forearm_0.obj"/>
+    <mesh file="ur5e/assets/forearm_1.obj"/>
+    <mesh file="ur5e/assets/forearm_2.obj"/>
+    <mesh file="ur5e/assets/forearm_3.obj"/>
+    <mesh file="ur5e/assets/wrist1_0.obj"/>
+    <mesh file="ur5e/assets/wrist1_1.obj"/>
+    <mesh file="ur5e/assets/wrist1_2.obj"/>
+    <mesh file="ur5e/assets/wrist2_0.obj"/>
+    <mesh file="ur5e/assets/wrist2_1.obj"/>
+    <mesh file="ur5e/assets/wrist2_2.obj"/>
+    <mesh file="ur5e/assets/wrist3.obj"/>
+
+    <!-- Hand-E Meshes -->
+    <mesh name="hande" file="hande/assets/hande.stl"/>
+    <mesh name="coupler" file="hande/assets/coupler.stl"/>
+    <mesh name="right_finger" file="hande/assets/finger_1.stl"/>
+    <mesh name="left_finger" file="hande/assets/finger_2.stl"/>
+  </asset>
+
+
+  <asset>
+      <material name="connector_mat" reflectance="0" rgba="0.824 0.435 0.227 0.6" shininess="0.5" specular="0" />
+      <material name="connector_mat2" reflectance="0" rgba="0.412 0.2175 0.1135 0.6" shininess="0.5" specular="0" />
+      <texture builtin="flat" height="256" width="256" rgb1="1 1 1" rgb2="1 1 1" type="skybox" />
+  </asset>
+  
+  <worldbody>
+    <light name="spotlight" mode="targetbodycom" target="wrist_2_link" pos="0 -1 2"/>
+    <body name="base" quat="1 0 0 1" childclass="ur5e">
+      <inertial mass="4.0" pos="0 0 0" diaginertia="0.00443333156 0.00443333156 0.0072"/>
+      <geom mesh="base_0" material="black" class="visual"/>
+      <geom mesh="base_1" material="jointgray" class="visual"/>
+      <body name="shoulder_link" pos="0 0 0.163">
+        <inertial mass="3.7" pos="0 0 0" diaginertia="0.0102675 0.0102675 0.00666"/>
+        <joint name="shoulder_pan_joint" class="size3" axis="0 0 1"/>
+        <site name="shoulder_pan_joint"/>
+        <geom mesh="shoulder_0" material="urblue" class="visual"/>
+        <geom mesh="shoulder_1" material="black" class="visual"/>
+        <geom mesh="shoulder_2" material="jointgray" class="visual"/>
+        <geom class="collision" size="0.06 0.06" pos="0 0 -0.04"/>
+        <body name="upper_arm_link" pos="0 0.138 0" quat="1 0 1 0">
+          <inertial mass="8.393" pos="0 0 0.2125" diaginertia="0.133886 0.133886 0.0151074"/>
+          <joint name="shoulder_lift_joint" class="size3"/>
+          <site name="shoulder_lift_joint"/>
+          <geom mesh="upperarm_0" material="linkgray" class="visual"/>
+          <geom mesh="upperarm_1" material="black" class="visual"/>
+          <geom mesh="upperarm_2" material="jointgray" class="visual"/>
+          <geom mesh="upperarm_3" material="urblue" class="visual"/>
+          <geom class="collision" pos="0 -0.04 0" quat="1 1 0 0" size="0.06 0.06"/>
+          <geom class="collision" size="0.05 0.2" pos="0 0 0.2"/>
+          <body name="forearm_link" pos="0 -0.131 0.425">
+            <inertial mass="2.275" pos="0 0 0.196" diaginertia="0.0311796 0.0311796 0.004095"/>
+            <joint name="elbow_joint" class="size3_limited"/>
+            <site name="elbow_joint"/>
+            <geom mesh="forearm_0" material="urblue" class="visual"/>
+            <geom mesh="forearm_1" material="linkgray" class="visual"/>
+            <geom mesh="forearm_2" material="black" class="visual"/>
+            <geom mesh="forearm_3" material="jointgray" class="visual"/>
+            <geom class="collision" pos="0 0.08 0" quat="1 1 0 0" size="0.055 0.06"/>
+            <geom class="collision" size="0.038 0.19" pos="0 0 0.2"/>
+            <body name="wrist_1_link" pos="0 0 0.392" quat="1 0 1 0">
+              <inertial mass="1.219" pos="0 0.127 0" diaginertia="0.0025599 0.0025599 0.0021942"/>
+              <joint name="wrist_1_joint" class="size1"/>
+              <site name="wrist_1_joint"/>
+              <geom mesh="wrist1_0" material="black" class="visual"/>
+              <geom mesh="wrist1_1" material="urblue" class="visual"/>
+              <geom mesh="wrist1_2" material="jointgray" class="visual"/>
+              <geom class="collision" pos="0 0.05 0" quat="1 1 0 0" size="0.04 0.07"/>
+              <body name="wrist_2_link" pos="0 0.127 0">
+                <inertial mass="1.219" pos="0 0 0.1" diaginertia="0.0025599 0.0025599 0.0021942"/>
+                <joint name="wrist_2_joint" axis="0 0 1" class="size1"/>
+                <site name="wrist_2_joint"/>
+                <geom mesh="wrist2_0" material="black" class="visual"/>
+                <geom mesh="wrist2_1" material="urblue" class="visual"/>
+                <geom mesh="wrist2_2" material="jointgray" class="visual"/>
+                <geom class="collision" size="0.04 0.06" pos="0 0 0.04"/>
+                <geom class="collision" pos="0 0.02 0.1" quat="1 1 0 0" size="0.04 0.04"/>
+                <body name="wrist_3_link" pos="0 0 0.1">
+                  <inertial mass="0.1889" pos="0 0.0771683 0" quat="1 0 0 1"
+                    diaginertia="0.000132134 9.90863e-05 9.90863e-05"/>
+                  <joint name="wrist_3_joint" class="size1"/>
+                  <site name="wrist_3_joint"/>
+                  <geom material="linkgray" mesh="wrist3" class="visual"/>
+                  <geom class="eef_collision" pos="0 0.08 0" quat="1 1 0 0" size="0.04 0.02"/>
+                  <body name="tool0_link" pos="0 0.1 0" quat="-0.707107 0.707107 0 0">
+                    <site name="attachment_site" pos="0 0 0" />
+                    <camera name="handcam_depth" pos="-0.1 0 0" fovy="62" quat="0.1830 0.6830 -0.6830 -0.1830"/>
+                    <camera name="handcam_depth2" pos="0.1 0 0" fovy="62" quat="-0.1830 -0.6830 -0.6830 -0.1830"/>
+                    <camera name="handcam_rgb" pos="-0.1 0.015 0" fovy="42.5" quat="0.1830 0.6830 -0.6830 -0.1830"/>
+                    <camera name="handcam_rgb2" pos="0.1 -0.015 0" fovy="42.5" quat="-0.1830 -0.6830 -0.6830 -0.1830"/>
+                    <site name="eef_site" pos="0 0 0.05" quat="0 0.707107 -0.707107 0"/>
+                    <body name="hande" quat="-1 0 0 1">
+                      <geom name="hande_coupler" type="mesh" class="visual" rgba="0.1 0.1 0.1 1" mesh="coupler" />
+                      <geom mesh="coupler" class="hande_collision"/>
+                      <geom name="hande_base" type="mesh" class="visual" rgba="0.1 0.1 0.1 1" mesh="hande" />
+                      <geom mesh="hande" class="hande_collision"/>
+                      <site name="pinch" pos="0 0 0.135"  type="sphere" size="0.001 0.001 0.001" rgba="0 0 1 1" group="0"/>
+                      <body name="hande_left_finger" pos="0.01141217 0 0.099">
+                        <inertial pos="0.02262 -0.00759 0.00738" quat="0.871952 0.0369732 -0.211073 0.440205" mass="0.03804" diaginertia="1.22763e-05 1.22763e-05 1.22763e-05" />
+                        <joint name="hande_left_finger_joint"  class="hande_left_finger" pos="0 0 0" axis="1 0 0" armature="0.001"/>
+                        <geom class="pad_box1" name="left_pad1"/>
+                        <geom name="left_finger" type="mesh" class="visual" rgba="0.4 0.4 0.4 1" mesh="left_finger" />
+                        <!-- <geom mesh="left_finger" class="hande_collision"/> --> 
+                      </body>
+                      <body name="hande_right_finger" pos="-0.01141217 0 0.099">  
+                        <inertial pos="-0.02262 0.00759 0.00738" quat="0.871952 -0.0369732 0.211073 0.440205" mass="0.03804" diaginertia="1.22763e-05 1.22763e-05 1.22763e-05" />
+                        <joint name="hande_right_finger_joint"  class="hande_right_finger"  pos="0 0 0" axis="-1 0 0" armature="0.001"/>
+                        <geom class="pad_box2" name="right_pad1"/>
+                        <geom name="right_finger" type="mesh" class="visual" rgba="0.4 0.4 0.4 1" mesh="right_finger" />
+                        <!-- <geom mesh="right_finger" class="hande_collision"/> -->
+                      </body>
+                      <body name="connector_body" pos="-0.0 -0.00759 0.15" quat="-1 0 0 1">
+                        <geom solimp="0.95 0.95 0.01" solref="0.02 1" condim="6" contype="1" conaffinity="1" priority="1" name="connector_top" pos="-0.008774999618530274 0.0 0.00175" type="box" material="connector_mat" density="200" friction="0.8 0.8 0.8"  size="0.008774999618530274 0.015 0.00175" />
+                          <site name="connector_top" type="sphere" pos="-0.008774999618530274 0.0 0.00175" quat="0.7071 0 0 0.7071" size="0.001 0.001 0.001" rgba="0.8 0.4 0.4 1"/>
+                        <geom solimp="0.95 0.95 0.01" solref="0.02 1" condim="6" contype="1" conaffinity="1" priority="1" name="connector_head" pos="-0.008774999618530274 0.0 -0.007" type="box" material="connector_mat2" density="200" friction="0.8 0.8 0.8"  size="0.008774999618530274 0.015 0.007" />
+                          <site name="connector_head" type="sphere" pos="-0.008774999618530274 0.0 -0.007" quat="0.7071 0 0 0.7071" size="0.001 0.001 0.001" rgba="0.8 0.4 0.4 1"/>
+                          <site name="connector_roof" type="sphere" pos="-0.008774999618530274 0.0 -0.014" quat="0.7071 0 0 0.7071" size="0.001 0.001 0.001" rgba="0.8 0.4 0.4 1"/>
+                        <geom solimp="0.95 0.95 0.01" solref="0.02 1" condim="6" contype="1" conaffinity="1" priority="1" name="connector_center" pos="-0.007689999759197235 2.0324375890960812e-19 0.013100000381469728" type="box" material="connector_mat" density="100" friction="0.8 0.8 0.8"  size="0.0060399997830390935 0.014175000190734864 0.009600000381469726" />
+                          <site name="connector_center" type="sphere" pos="-0.007689999759197235 2.0324375890960812e-19 0.013100000381469728" quat="0.7071 0 0 0.7071" size="0.001 0.001 0.001" rgba="0.8 0.4 0.4 1"/>
+                          <site name="connector_bottom" type="sphere" pos="-0.007689999759197235 2.0324375890960812e-19 0.022700001" quat="0.7071 0 0 0.7071" size="0.001 0.001 0.001" rgba="0.8 0.4 0.4 1"/>
+                        <geom  solimp="0.95 0.95 0.01" solref="0.02 1" condim="6" contype="1" conaffinity="1" priority="1" name="connector_front" pos="-0.01663000011444092 4.9998760223388105e-06 0.013100000381469726" type="box" material="connector_mat" density="100" friction="0.8 0.8 0.8"  size="0.00290000057220459 0.006555000066757202 0.009600000381469726" />
+                          <site name="connector_front" type="sphere" pos="-0.01663000011444092 4.9998760223388105e-06 0.013100000381469726" quat="0.7071 0 0 0.7071" size="0.001 0.001 0.001" rgba="1 0 0 1"/>
+                        <!-- <body name="tttt" pos="-0.00759 0 0.0227" quat="0 0 0 0">
+                            <geom solimp="0.9 0.95 0.01" solref="0.02 1" condim="6" contype="1" conaffinity="1" priority="1" name="ttt1" pos="0 0 0" type="box" material="connector_mat" density="200" friction="0.8 0.8 0.8"  size="0.01 0.01 0.001" />
+                        </body> -->
+                        <site name="bottom_pinch" pos="-0.00759 0 0.0227"  type="sphere" size="0.001 0.001 0.001" rgba="1 0 0 1" group="0"/>
+                        <site name="bottom_corner" pos="-0.002 -0.0135 0.0227"  type="sphere" size="0.001 0.001 0.001" rgba="1 0 0 1" group="0"/>
+                      </body>
+                    </body>
+                  </body>
+                </body>
+              </body>
+            </body>
+          </body>
+        </body>
+      </body>
+    </body>
+  </worldbody>
+
+  <contact>
+    <exclude body1="hande" body2="hande_left_finger"/>
+    <exclude body1="hande" body2="hande_right_finger"/>
+  </contact>
+
+  <equality>
+    <joint joint1="hande_left_finger_joint" joint2="hande_right_finger_joint" polycoef="0 1 0 0 0" solimp="0.9 0.95 0.01"
+      solref="0.005 1" />
+    <weld body1="connector_body" body2="hande_left_finger"  />
+    <weld body1="connector_body" body2="hande_right_finger"  />
+  </equality>
+  
+  <tendon>
+    <fixed name="split">
+      <joint joint="hande_left_finger_joint" coef="0.5" />
+      <joint joint="hande_right_finger_joint" coef="0.5" />
+    </fixed>
+  </tendon>
+
+
+  <actuator>
+    <general class="size3" name="shoulder_pan" joint="shoulder_pan_joint"/>
+    <general class="size3" name="shoulder_lift" joint="shoulder_lift_joint"/>
+    <general class="size3_limited" name="elbow" joint="elbow_joint"/>
+    <general class="size1" name="wrist_1" joint="wrist_1_joint"/>
+    <general class="size1" name="wrist_2" joint="wrist_2_joint"/>
+    <general class="size1" name="wrist_3" joint="wrist_3_joint"/>
+
+    <!-- Hand-E Actuator -->
+    <general name="hande_fingers_actuator" class="hande" tendon="split" ctrlrange="0 255"
+      forcerange="-180 180" gaintype="affine" biastype="affine" gainprm="0.00980392"
+      biasprm="0 -100 -10"/>
+  </actuator>
+
+  <sensor>
+    <!-- Joint positions for UR5e -->
+    <jointpos name="ur5e/joint1_pos" joint="shoulder_pan_joint"/>
+    <jointpos name="ur5e/joint2_pos" joint="shoulder_lift_joint"/>
+    <jointpos name="ur5e/joint3_pos" joint="elbow_joint"/>
+    <jointpos name="ur5e/joint4_pos" joint="wrist_1_joint"/>
+    <jointpos name="ur5e/joint5_pos" joint="wrist_2_joint"/>
+    <jointpos name="ur5e/joint6_pos" joint="wrist_3_joint"/>
+
+    <!-- Joint velocities for UR5e -->
+    <jointvel name="ur5e/joint1_vel" joint="shoulder_pan_joint"/>
+    <jointvel name="ur5e/joint2_vel" joint="shoulder_lift_joint"/>
+    <jointvel name="ur5e/joint3_vel" joint="elbow_joint"/>
+    <jointvel name="ur5e/joint4_vel" joint="wrist_1_joint"/>
+    <jointvel name="ur5e/joint5_vel" joint="wrist_2_joint"/>
+    <jointvel name="ur5e/joint6_vel" joint="wrist_3_joint"/>
+
+    <!-- Torque sensors for UR5e joints -->
+    <torque name="ur5e/joint1_torque" site="shoulder_pan_joint"/>
+    <torque name="ur5e/joint2_torque" site="shoulder_lift_joint"/>
+    <torque name="ur5e/joint3_torque" site="elbow_joint"/>
+    <torque name="ur5e/joint4_torque" site="wrist_1_joint"/>
+    <torque name="ur5e/joint5_torque" site="wrist_2_joint"/>
+    <torque name="ur5e/joint6_torque" site="wrist_3_joint"/>
+
+    <!-- Force sensor for the gripper -->
+    <force name="ur5e/wrist_force" site="attachment_site" />
+    <torque name="ur5e/wrist_torque" site="attachment_site" />
+    <torque name="ur5e/connector_bottom_torque" site="connector_bottom"/>
+    <force name="ur5e/connector_bottom_force" site="connector_bottom"/>
+    <torque name="ur5e/pinch" site="bottom_pinch"/>
+
+    <!-- Hand-E sensors (positions, quaternions, velocities) -->
+    <framepos name="hande/pinch_pos" objtype="site" objname="pinch"/>
+    <framequat name="hande/pinch_quat" objtype="site" objname="pinch"/>
+    <framelinvel name="hande/pinch_vel" objtype="site" objname="pinch"/>
+  </sensor>
+  <sensor>
+      <framepos name="connector_bottom_pos" objtype="site" objname="connector_bottom"/>
+      <framequat name="connector_bottom_quat" objtype="site" objname="connector_bottom"/>
+      <framepos name="connector_roof_pos" objtype="site" objname="connector_roof"/>
+      <framequat name="connector_roof_quat" objtype="site" objname="connector_roof"/>
+      <framepos name="connector_head_pos" objtype="site" objname="connector_head"/>
+      <framequat name="connector_head_quat" objtype="site" objname="connector_head"/>
+      <framepos name="connector_center_pos" objtype="site" objname="connector_center"/>
+      <framequat name="connector_center_quat" objtype="site" objname="connector_center"/>
+  </sensor>
+
+  <visual>
+      <global offwidth="1920" offheight="1080" />
+      <scale framewidth="0.005" framelength="0.1" />
+  </visual>
+
+</mujoco>

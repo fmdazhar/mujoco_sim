@@ -1,0 +1,59 @@
+<mujoco model="port">
+    <!-- <include file="scene.xml"/> -->
+
+
+    <compiler angle="radian" />
+
+    <asset>
+        <texture builtin="flat" height="256" width="256" rgb1="1 1 1" rgb2="1 1 1" type="skybox" />
+        <material name="table_mat" reflectance="0" rgba="0.2 0.2 0.2 1" shininess="0.5" specular="0" />
+        <material name="port_mat" reflectance="0" rgba="1 0.69 0.2 1" shininess="0.5" specular="0" />
+    </asset>
+
+    
+    <worldbody>
+        <body pos="0.35 0.25 0.0" name="port_adapter">
+            <inertial pos="0. 0. -0.0115" quat="1 0 0 0" mass="3.88125" diaginertia="0.02038594 0.02038594 0.04042969" />
+            <geom solimp="0.95 0.95 0.01" solref="0.02 1" condim="6" name="plate" pos="0.0 0.0 0" size="0.075 0.075 0.006" type="box" density="2700" material="table_mat" />
+
+            <body name="port1" pos="0.011 0.001 0.03" quat="0 1 0 0">
+                <geom solimp="0.95 0.95 0.01" solref="0.02 1" condim="6" pos="-0.000824999988079071 0.0 0.009600000381469725" type="box" material="table_mat" size="0.000824999988079071 0.014579999923706056 0.0094"/>
+                <geom solimp="0.95 0.95 0.01" solref="0.02 1" condim="6" pos="-0.007954999923706055 0.01540499973297119 0.009600000381469725" type="box" material="table_mat" size="0.007954999923706055 0.0008249998092651368 0.0094"/>
+                <geom solimp="0.95 0.95 0.01" solref="0.02 1" condim="6" pos="-0.007954999923706055 -0.015404999732971193 0.009600000381469725" type="box" material="table_mat" size="0.007954999923706055 0.0008249998092651368 0.0094"/>
+                <geom solimp="0.95 0.95 0.01" solref="0.02 1" condim="6" pos="-0.015085000038146971 0.010784999847412107 0.009600000381469728" type="box" material="table_mat" size="0.0008249998092651368 0.0037950000762939453 0.0094"/>
+                <geom solimp="0.95 0.95 0.01" solref="0.02 1" condim="6" pos="-0.015085000038146971 -0.010784999847412107 0.009600000381469728" type="box" material="table_mat" size="0.0008249998092651368 0.0037950000762939453 0.0094"/>
+                <geom solimp="0.95 0.95 0.01" solref="0.02 1" condim="6" pos="-0.01884000015258789 0.007815000057220458 0.009600000381469726" type="box" material="table_mat" size="0.0029300003051757812 0.000825000286102295 0.0094"/>
+                <geom solimp="0.95 0.95 0.01" solref="0.02 1" condim="6" pos="-0.01884000015258789 -0.007815000057220458 0.009600000381469726" type="box" material="table_mat" size="0.0029300003051757812 0.000825000286102295 0.0094"/>
+                <geom solimp="0.95 0.95 0.01" solref="0.02 1" condim="6" pos="-0.02094500064849854 -8.79485285575174e-20 0.009600000381469726" type="box" material="table_mat" size="0.0008249998092651368 0.006989999771118164 0.0094"/>
+                <geom solimp="0.95 0.95 0.01" solref="0.02 1" condim="6" pos="-0.007954999923706055 4.766751232728594e-20 0.020025000572204587" type="box" material="table_mat" size="0.007954999923706055 0.016229999542236327 0.0008249998092651368"/>
+                <geom solimp="0.95 0.95 0.01" solref="0.02 1" condim="6" pos="-0.01884000015258789 0.0 0.02002500057220459" type="box" material="table_mat" size="0.0029300003051757812 0.008640000343322754 0.0008249998092651368"/>
+                
+                <geom solimp="0.95 0.95 0.01" solref="0.02 1" condim="6" pos="-0.03677000045776367 0.0 0.0015" type="box" material="port_mat" size="0.015 0.046229999542236326 0.0015" />
+                <geom solimp="0.95 0.95 0.01" solref="0.02 1" condim="6" pos="0.015 0.0 0.0015" type="box" material="port_mat" size="0.015 0.046229999542236326 0.0015" />
+                <geom solimp="0.95 0.95 0.01" solref="0.02 1" condim="6" pos="-0.01884000015258789 0.02743499994277954 0.0015" type="box" material="port_mat" size="0.0029300003051757812 0.018794999599456786 0.0015" />
+                <geom solimp="0.95 0.95 0.01" solref="0.02 1" condim="6" pos="-0.007955 0.03122999954223633 0.0015" type="box" material="port_mat" size="0.007954999847412112 0.015 0.0015" />
+                <geom solimp="0.95 0.95 0.01" solref="0.02 1" condim="6" pos="-0.018840000152587896 -0.02743499946594238 0.0015" type="box" material="port_mat" size="0.0029300003051757812 0.018795000076293946 0.0015" />
+                <geom solimp="0.95 0.95 0.01" solref="0.02 1" condim="6" pos="-0.007955 -0.031229999542236323 0.0015" type="box" material="port_mat" size="0.007954999847412112 0.015 0.0015" />
+
+                <site name="port_bottom" type="sphere" pos="-0.008 0 0.017" quat="0.7071067812 0 0 0.7071067812" size="0.001 0.001 0.001" rgba="1 0 0 0"/>
+                <site name="port_centre" type="sphere" pos="-0.008 0 0.009600000381469725" quat="0.7071067812 0 0 0.7071067812" size="0.001 0.001 0.001" rgba="1 0 0 0"/>
+                <site name="port_top" type="sphere" pos="-0.008 0 0.0" quat="0.7071067812 0 0 0.7071067812" size="0.001 0.001 0.001" rgba="0.8 0.4 0.4 0"/>
+            </body>
+        </body>
+    </worldbody>
+
+    <sensor>
+        <framepos name="port_bottom_pos" objtype="site" objname="port_bottom"/>
+        <framequat name="port_bottom_quat" objtype="site" objname="port_bottom"/>
+        <framepos name="port_centre_pos" objtype="site" objname="port_centre"/>
+        <framequat name="port_centre_quat" objtype="site" objname="port_centre"/>
+        <framepos name="port_top_pos" objtype="site" objname="port_top"/>
+        <framequat name="port_top_quat" objtype="site" objname="port_top"/>
+    </sensor>
+
+    <visual>
+        <global offwidth="1920" offheight="1080" />
+        <scale framewidth="0.005" framelength="0.1" />
+    </visual>
+
+</mujoco>
