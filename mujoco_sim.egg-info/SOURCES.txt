@@ -1,3 +1,4 @@
+LICENSE
 README.md
 setup.py
 mujoco_sim/__init__.py
