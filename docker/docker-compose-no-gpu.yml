@@ -16,7 +16,7 @@ services:
     
     ports:
       # VNC ports
-      - ${VNC_PORT}:6082
+      - ${VNC_PORT}:6080
 
     volumes:
     # Mount code directory

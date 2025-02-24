@@ -14,7 +14,7 @@ class PegEnvConfig:
             "physics_dt": 0.002,  # Physics simulation time step (s)
             "time_limit": 5.0,  # Maximum episode duration (s)
             "seed": 0,  # Random seed for reproducibility
-            "camera_ids": [1, 2, 3, 4],  # Camera IDs used for rendering
+            "camera_ids": [],  # Camera IDs used for rendering
             "version": 0,  # Environment version (affects observation space and behavior)
             "enable_force_feedback": False,  # Enable force feedback visualization
             "enable_force_visualization": True,  # Enable visualization of contact forces

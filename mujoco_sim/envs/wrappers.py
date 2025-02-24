@@ -212,8 +212,8 @@ class SpacemouseIntervention(gymnasium.ActionWrapper):
             print("SpaceMouse connected successfully.")
         except OSError:
             print("SpaceMouse not found, falling back to Keyboard.")
-            # self.expert = Keyboard()
-            self.expert = MujocoKeyboard()
+            self.expert = Keyboard()
+            # self.expert = MujocoKeyboard()
 
         self.expert.start_control()
         self.last_intervene = 0

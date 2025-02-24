@@ -4,7 +4,6 @@
 
 import numpy as np
 import pygame
-
 from .device import Device
 from mujoco_sim.utils.transform_utils import rotation_matrix
 
@@ -17,7 +16,7 @@ class Keyboard(Device):
         rot_sensitivity (float): Magnitude of scale input rotation commands scaling
     """
 
-    def __init__(self, pos_sensitivity=0.005 * 0.03, rot_sensitivity=0.005 * 20):
+    def __init__(self, pos_sensitivity=1/1000, rot_sensitivity=1/100):
         # Initialize pygame and create a small hidden window to capture keyboard events
         pygame.init()
         pygame.display.set_mode((200, 200))  # Small visible window
@@ -27,7 +26,7 @@ class Keyboard(Device):
 
         self._reset_state = 0
         self._enabled = False
-        self._pos_step = 0.05
+        self._pos_step = 1/150
 
         self.pos_sensitivity = pos_sensitivity
         self.rot_sensitivity = rot_sensitivity
