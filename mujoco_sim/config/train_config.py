@@ -56,7 +56,7 @@ class Config:
     def create_env(self):
         """Lazily create and return the gym environment."""
         if self._env is None:
-            self._env = gym.make(self.env_id, render_mode=self.render_mode, max_episode_steps=500)
+            self._env = gym.make(self.env_id, render_mode=self.render_mode, max_episode_steps=self.max_env_steps)
             self.load_env_config()
             print("Environment created")
         return self._env

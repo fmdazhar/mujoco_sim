@@ -1,7 +1,6 @@
 #data
-demonstration_data/
-logs/
-
+**/demonstration_data/
+**/logs/
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

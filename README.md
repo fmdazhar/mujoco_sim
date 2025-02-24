@@ -9,6 +9,18 @@ It includes a state-based Peg-in-Hole task environment, custom Gymnasium wrapper
 - run `pip install -e .` to install this package.
 - run `pip install -r requirements.txt` to install sim dependencies.
 
+# Docker Setup
+- Build the Docker image:
+```bash
+cd docker
+./docker-build.sh
+```
+- Start the container:
+```bash
+./docker-start.sh
+```
+For Windows: Use windows-docker-build.bat and windows-docker-start.bat.
+
 # Overview
 
 - **Environment Wrappers:**  
@@ -27,11 +39,15 @@ It includes a state-based Peg-in-Hole task environment, custom Gymnasium wrapper
 # Configuration Details
 
 ## train_config.py
-- **General:** `gamma`, `render_mode`, `manual_demonstration_generation`, `heuristic_demonstration_generation`, `wait_for_input`, `env_id`, `max_env_steps`
-- **Demo Generation:** `num_demonstration_episodes`, `demonstration_data_paths`, `rew_bootstrapping`
-- **Env Variables:** Auto-sets `key_action_mapping`, `repo_id`, `filename`, `obs_dim`, `action_dim`
+This file contains configurations for **demonstration generation**.
+- gamma: Discount factor for future rewards (for RL training)
+- render_mode: "human"
+- manual_demonstration_generation: Enable manual demonstration collection
+- heuristic_demonstration_generation: Enable heuristic (automated) demonstration collection
+- max_env_steps: Maximum number of steps per episode
 
 ## config.py (PegEnvConfig)
+This file contains configurations for **environment setup**.
 - **ENV_CONFIG:** `action_scale`, `control_dt`, `physics_dt`, `time_limit`, `seed`, `version`, plus flags for `enable_force_feedback`, `enable_force_visualization`, `enable_slider_controller`
 - **DEFAULT_CAM_CONFIG:** Camera settings (`type`, `fixedcamid`, `lookat`, `distance`, `azimuth`, `elevation`)
 - **UR5E_CONFIG:** Home/reset positions, Cartesian bounds, port settings, randomization flags, reset tolerance
