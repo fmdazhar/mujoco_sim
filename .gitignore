@@ -26,6 +26,7 @@ var/
 wheels/
 share/python-wheels/
 *.egg-info/
+mujoco_sim.egg-info/
 .installed.cfg
 *.egg
 MANIFEST
