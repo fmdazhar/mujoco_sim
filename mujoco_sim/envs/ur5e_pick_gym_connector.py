@@ -52,6 +52,7 @@ class ur5ePegInHoleGymEnv(MujocoGymEnv):
         self.render_width = config.RENDERING_CONFIG["width"]
         self.render_height = config.RENDERING_CONFIG["height"]
         self.camera_id = config.ENV_CONFIG["camera_ids"]
+        self._max_episode_steps = config.ENV_CONFIG["_max_episode_steps"]
         render_spec = GymRenderingSpec(
             height=config.RENDERING_CONFIG["height"],
             width=config.RENDERING_CONFIG["width"],
@@ -61,7 +62,6 @@ class ur5ePegInHoleGymEnv(MujocoGymEnv):
             xml_path=_XML_PATH,
             control_dt=config.ENV_CONFIG["control_dt"],
             physics_dt=config.ENV_CONFIG["physics_dt"],
-            time_limit=config.ENV_CONFIG["time_limit"],
             seed=config.ENV_CONFIG["seed"],
             render_spec=render_spec,
         )
@@ -390,6 +390,7 @@ class ur5ePegInHoleGymEnv(MujocoGymEnv):
             step_count += 1
 
         obs = self._compute_observation()
+        self._elapsed_steps = 0
         return obs, {}
 
     def get_state(self) -> np.ndarray:
@@ -468,7 +469,11 @@ class ur5ePegInHoleGymEnv(MujocoGymEnv):
         obs = self._compute_observation()
         rew, task_complete = self._compute_reward()
         terminated = task_complete
-        truncated = self.time_limit_exceeded()
+        self._elapsed_steps += 1
+        if self._elapsed_steps >= self._max_episode_steps:
+            truncated = True
+        else:
+            truncated = False
         return obs, rew, terminated, truncated, {"is_success": task_complete}
     
     def render(self, cam_ids: list = None) -> np.ndarray:

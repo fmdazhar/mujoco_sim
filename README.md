@@ -47,7 +47,7 @@ This file contains configurations for **demonstration generation**.
 
 ## config.py (PegEnvConfig)
 This file contains configurations for **environment setup**.
-- **ENV_CONFIG:** `action_scale`, `control_dt`, `physics_dt`, `time_limit`, `seed`, `version`, plus flags for `enable_force_feedback`, `enable_force_visualization`, `enable_slider_controller`
+- **ENV_CONFIG:** `action_scale`, `control_dt`, `physics_dt`, `_max_episode_steps`, `seed`, `version`, plus flags for `enable_force_feedback`, `enable_force_visualization`, `enable_slider_controller`
 - **DEFAULT_CAM_CONFIG:** Camera settings (`type`, `fixedcamid`, `lookat`, `distance`, `azimuth`, `elevation`)
 - **UR5E_CONFIG:** Home/reset positions, Cartesian bounds, port settings, randomization flags, reset tolerance
 - **CONTROLLER_CONFIG:** Gains, damping ratios, clipping limits, control method, etc.

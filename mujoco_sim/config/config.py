@@ -12,7 +12,7 @@ class PegEnvConfig:
             "action_scale": np.array([1, 1, 1]),  # Scaling factors for position, orientation, and gripper control
             "control_dt": 0.02,  # Controller update time step (s)
             "physics_dt": 0.002,  # Physics simulation time step (s)
-            "time_limit": 20.0,  # Maximum episode duration (s)
+            "_max_episode_steps": 1000.0,  # Maximum episode steps
             "seed": 0,  # Random seed for reproducibility
             "camera_ids": [],  # Camera IDs used for rendering
             "version": 0,  # Environment version (affects observation space and behavior)
