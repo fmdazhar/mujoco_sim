@@ -44,7 +44,6 @@ This file contains configurations for **demonstration generation**.
 - render_mode: "human"
 - manual_demonstration_generation: Enable manual demonstration collection
 - heuristic_demonstration_generation: Enable heuristic (automated) demonstration collection
-- max_env_steps: Maximum number of steps per episode
 
 ## config.py (PegEnvConfig)
 This file contains configurations for **environment setup**.

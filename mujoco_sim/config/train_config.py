@@ -26,7 +26,6 @@ class Config:
         self.heuristic_demonstration_generation = False
         self.wait_for_input = True
         self.env_id = "ur5ePegInHoleGymEnv_medium-v1"  # Example environment ID.
-        self.max_env_steps = 1000
 
         # Demonstration generation settings.
         self.num_demonstration_episodes = [1, 4, 16, 32]
@@ -56,7 +55,7 @@ class Config:
     def create_env(self):
         """Lazily create and return the gym environment."""
         if self._env is None:
-            self._env = gym.make(self.env_id, render_mode=self.render_mode, max_episode_steps=self.max_env_steps)
+            self._env = gym.make(self.env_id, render_mode=self.render_mode)
             self.load_env_config()
             print("Environment created")
         return self._env
