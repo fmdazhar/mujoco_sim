@@ -38,7 +38,6 @@ class PegEnvConfig:
         # ---------------------------- #
         self.UR5E_CONFIG = {
             "home_position": np.array([-1.907, -1.565, 2.350, -2.355, -1.571, 1.234]),  # Joint angles for home position
-            "reset_position": np.array([-1.972, -1.807, 2.082, -1.846, -1.571, 1.169]),  # Joint angles for reset position
             "default_cartesian_bounds": np.array([[0.2, -0.3, 0.0], [0.6, 0.3, 0.05]]),  # XYZ workspace limits
             "restrict_cartesian_bounds": True,  # Constrain motion to defined Cartesian boundaries
             "default_port_pos": np.array([0.4, 0.0, 0.0]),  # Default position of the insertion port
@@ -67,7 +66,7 @@ class PegEnvConfig:
             "rot_clip_min": np.array([-0.03, -0.03, -0.03]),  # Min rotational velocity limits
             "rot_clip_max": np.array([0.03, 0.03, 0.03]),  # Max rotational velocity limits
             "method": "dynamics",  # Control method ("dynamics", "pinv", "svd", etc.)
-            "inertia_compensation": False,  # Enable compensation for robot inertia
+            "inertia_compensation": False,  # Enable compensation for robot inertia for "dynamics" method
             "pos_gains": (100, 100, 100),  # Proportional gain values for position control
             "max_angvel": 4,  # Maximum angular velocity
             "integration_dt": 0.2,  # Integration time step for controller
@@ -90,7 +89,7 @@ class PegEnvConfig:
             "dense_reward_weights": {
                 "box_target": 1.0,  # Reward weight for reaching the target
             },
-            "sparse_reward_weights": 0,  # Reward given upon task completion
+            "sparse_reward_weights": 0,  # Sparse Reward given upon task completion
             "task_complete_tolerance": 0.0025,  # Distance threshold for considering task complete
         }
 

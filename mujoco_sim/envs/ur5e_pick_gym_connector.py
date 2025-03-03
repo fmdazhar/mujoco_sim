@@ -77,7 +77,6 @@ class ur5ePegInHoleGymEnv(MujocoGymEnv):
         self.default_cam_config = config.DEFAULT_CAM_CONFIG
 
         self.ur5e_home = config.UR5E_CONFIG["home_position"]
-        self.ur5e_reset = config.UR5E_CONFIG["reset_position"]
         self.cartesian_bounds = config.UR5E_CONFIG["default_cartesian_bounds"]
         self.restrict_cartesian_bounds = config.UR5E_CONFIG["restrict_cartesian_bounds"]
         self.default_port_pos = config.UR5E_CONFIG["default_port_pos"]
